@@ -1,5 +1,5 @@
 <script>
-import { useProductCart } from '@/stores/productStore'
+import { useProductStore } from '@/stores/productStore'
 import { onMounted } from 'vue'
 
 export default {
@@ -11,7 +11,7 @@ export default {
     }
   },
   setup() {
-    const cart = useProductCart()
+    const cart = useProductStore()
 
     onMounted(() => {
       cart.fetchProduct()
@@ -26,8 +26,8 @@ export default {
 <template>
   <section class="p-3 header mt-3">Home</section>
   <section>
-    <div class="row row-cols-3 justify-content-between mt-4">
-      <div v-for="product in products" :key="product.id" class="card col mb-5" style="width: 18rem">
+    <div class="row row-cols-2 row-cols-md-4 justify-content-between mt-4">
+      <div v-for="product in products" :key="product.id" class="card col mb-5">
         <img :src="product.photo" class="card-img-top" alt="..." />
         <div class="card-body">
           <h5 class="card-title">{{ product.name }}</h5>

@@ -8,6 +8,9 @@ AnimeComponent.vue
       </button>
     </div>
     <div class="flex">
+      <div v-if="product.cartItems.length === 0">
+        <p class="w-full p-3 d-flex justify-content-center">Keranjang belanja kosong</p>
+      </div>
       <div v-for="item in product.cartItems" :key="item.id" class="mb-3 border border-b-2">
         <div class="flex-content">
           <div>
@@ -29,12 +32,12 @@ AnimeComponent.vue
         </div>
       </div>
     </div>
-    <button class="btn btn-primary">Checkout</button>
+    <button v-if="product.cartItems.length > 0" class="btn btn-primary">Checkout</button>
   </div>
 </template>
 
 <script>
-import { useProductCart } from '@/stores/productStore'
+import { useProductStore } from '@/stores/productStore'
 import anime from 'animejs'
 
 export default {
@@ -53,7 +56,7 @@ export default {
     })
   },
   setup() {
-    const product = useProductCart()
+    const product = useProductStore()
 
     return {
       product

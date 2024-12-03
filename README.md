@@ -1,6 +1,8 @@
 # vue-olshop
 
-This template should help get you started developing with Vue 3 in Vite.
+Fashion Shop
+
+This is an e-commerce website for a clothing and miscellaneous store, showcasing a variety of available products.
 
 ## Recommended IDE Setup
 

@@ -4,7 +4,7 @@
 
 <script>
 import CardBoxComponent from '@/components/CardBoxComponent.vue'
-import { useProductSearch } from '@/stores/productStore'
+import { useProductStore } from '@/stores/productStore'
 import { computed } from 'vue'
 
 export default {
@@ -12,7 +12,7 @@ export default {
     CardBoxComponent
   },
   setup() {
-    const store = useProductSearch()
+    const store = useProductStore()
     const products = computed(() => store.products)
 
     return {

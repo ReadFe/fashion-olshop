@@ -2,8 +2,6 @@
   <swiper
     :modules="modules"
     :slides-per-view="1"
-    navigation
-    :pagination="{ clickable: true }"
     :scrollbar="{ draggable: true }"
     loop
     :autoplay="{ delay: 2500, disableOnInteraction: false }"
@@ -52,7 +50,6 @@ export default {
 <style>
 .swiper,
 .swiper img {
-  height: 80vh;
   width: 100%;
 }
 </style>

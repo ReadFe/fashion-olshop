@@ -1,7 +1,6 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
-import axios from 'axios'
-import { useProductCart, useProductSearch } from '@/stores/productStore'
+import { useProductStore } from '@/stores/productStore'
 import { ref } from 'vue'
 import CartComponent from './CartComponent.vue'
 
@@ -16,17 +15,8 @@ export default {
       categories: []
     }
   },
-  async beforeMount() {
-    try {
-      const { data } = await axios.get('https://sistemtoko.com/public/demo/cat')
-      this.categories = data.aaData
-    } catch (error) {
-      console.error('Error fetching categories:', error)
-    }
-  },
   setup() {
-    const store = useProductSearch()
-    const cart = useProductCart()
+    const store = useProductStore()
     const query = ref(store.query)
 
     let isOpen = ref(false)
@@ -40,7 +30,7 @@ export default {
     return {
       onInput,
       query,
-      cart,
+      store,
       isOpen,
       onClose,
       onOpen
@@ -53,21 +43,21 @@ export default {
   <div v-if="isOpen" class="cart-container">
     <CartComponent :onClose="onClose" />
   </div>
-  <body class="bg-white">
-    <div class="row">
-      <div class="col-3 d-flex justify-content-center">
+  <header class="bg-white sticky-top">
+    <div class="row d-flex">
+      <div class="col-md-3 d-none d-md-block d-flex justify-content-center">
         <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="100" height="100" />
       </div>
-      <div class="col-9">
+      <div class="col-md-9">
         <div class="h-50 d-flex align-items-center justify-content-between border-bottom">
-          <p class="fs-4 slogan">FashionShop</p>
+          <p class="fs-4 py-3 slogan align-items-center">FashionShop</p>
           <div class="d-flex align-items-center">
-            <div class="border border-gray-500 mx-3">
+            <div class="d-flex mx-3">
               <input
                 type="text"
                 @input="onInput"
                 v-model="query"
-                class="search flex align-item-center px-2 p-1 border border-none text-decoration-none"
+                class="search d-none d-md-block flex align-item-center px-2 p-1 border border-none text-decoration-none"
                 placeholder="Search..."
               />
               <RouterLink to="/search">
@@ -77,12 +67,14 @@ export default {
               </RouterLink>
             </div>
             <div class="cart-box">
-              <i :onclick="onOpen" class="bi-cart2 p-2 px-3 border-start" style="font-size: 24px" />
-              <div v-if="cart.countCartItems > 0" class="cart-icon">{{ cart.countCartItems }}</div>
+              <i :onclick="onOpen" class="bi-cart2 px-3 border-start" style="font-size: 24px" />
+              <div v-if="store.countCartItems > 0" class="cart-icon">
+                {{ store.countCartItems }}
+              </div>
             </div>
           </div>
         </div>
-        <nav class="h-50 d-flex align-items-center gap-5">
+        <nav class="h-50 d-flex align-items-center gap-5" id="sticky2">
           <RouterLink to="/" class="text-decoration-none nav-link">Home</RouterLink>
           <div class="dropdown hover-dropdown">
             <RouterLink to="/brand" class="text-decoration-none nav-link">Brand</RouterLink>
@@ -96,18 +88,27 @@ export default {
         </nav>
       </div>
     </div>
-  </body>
+  </header>
   <RouterView />
 </template>
 
 <style scoped>
 .row {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
 }
 
 i:hover {
   cursor: pointer;
+}
+
+.slidedown {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 2px solid black;
+  height: 50px;
+  transition: nav-animate 0.4s ease-in-out;
 }
 
 .nav-link {

@@ -1,22 +1,7 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
 
-export const useProductSearch = defineStore('productSearch', {
-  state: () => ({
-    products: []
-  }),
-  actions: {
-    async filterData(query) {
-      const { data } = await axios.get('https://sistemtoko.com/public/demo/product')
-      const allData = data.aaData
-      this.products = allData.filter((item) =>
-        item.name.toLowerCase().includes(query.toLowerCase())
-      )
-    }
-  }
-})
-
-export const useProductCart = defineStore('productCart', {
+export const useProductStore = defineStore('productStore', {
   state: () => ({
     products: [],
     cartItems: []
@@ -30,11 +15,18 @@ export const useProductCart = defineStore('productCart', {
   actions: {
     async fetchProduct() {
       try {
-        const { data } = await axios.get('https://sistemtoko.com/public/demo/product')
+        const { data } = await axios.get(`${import.meta.env.VITE_APP_API_URL}/public/demo/product`)
         this.products = data.aaData
       } catch (error) {
         console.error('Error fetching products:', error)
       }
+    },
+    async filterData(query) {
+      const { data } = await axios.get(`${import.meta.env.VITE_APP_API_URL}/public/demo/product`)
+      const allData = data.aaData
+      this.products = allData.filter((item) =>
+        item.name.toLowerCase().includes(query.toLowerCase())
+      )
     },
     addToCart(item) {
       let existingItem = this.cartItems.find((product) => product.id === item.id)

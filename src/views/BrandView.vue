@@ -4,7 +4,7 @@
 
 <script>
 import CardBoxComponent from '@/components/CardBoxComponent.vue'
-import axios from 'axios'
+import { useProductStore } from '@/stores/productStore'
 
 export default {
   components: {
@@ -17,13 +17,12 @@ export default {
   },
   async beforeMount() {
     try {
-      const { data } = await axios.get('https://sistemtoko.com/public/demo/product')
-      this.products = data.aaData
+      const store = useProductStore()
+      store.fetchProduct()
+      this.products = store.products
     } catch (error) {
       console.error('Error fetching products:', error)
     }
-
-    console.log(this.products)
   }
 }
 </script>

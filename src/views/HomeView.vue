@@ -6,7 +6,6 @@
 <script>
 import CardBoxComponent from '@/components/CardBoxComponent.vue'
 import SwiperComponent from '@/components/SwiperComponent.vue'
-import axios from 'axios'
 
 export default {
   components: {
@@ -20,8 +19,9 @@ export default {
   },
   async beforeMount() {
     try {
-      const { data } = await axios.get('https://sistemtoko.com/public/demo/product')
-      this.products = data.aaData
+      const store = useProductStore()
+      store.fetchProduct()
+      this.products = store.products
     } catch (error) {
       console.error('Error fetching products:', error)
     }
