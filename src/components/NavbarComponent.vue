@@ -53,13 +53,6 @@ export default {
           <p class="fs-4 py-3 slogan align-items-center">FashionShop</p>
           <div class="d-flex align-items-center">
             <div class="d-flex mx-3">
-              <input
-                type="text"
-                @input="onInput"
-                v-model="query"
-                class="search d-none d-md-block flex align-item-center px-2 p-1 border border-none text-decoration-none"
-                placeholder="Search..."
-              />
               <RouterLink to="/search">
                 <button type="submit" class="bg-transparent border border-none">
                   <i class="bi-search p-2" style="font-size: 19px" />
@@ -77,12 +70,7 @@ export default {
         <nav class="h-50 d-flex align-items-center gap-5" id="sticky2">
           <RouterLink to="/" class="text-decoration-none nav-link">Home</RouterLink>
           <div class="dropdown hover-dropdown">
-            <RouterLink to="/brand" class="text-decoration-none nav-link">Brand</RouterLink>
-            <ul class="dropdown-menu">
-              <li v-for="cat in categories" :key="cat.product_category_id">
-                <a class="dropdown-item" href="/">{{ cat.product_category_name }}</a>
-              </li>
-            </ul>
+            <RouterLink to="/search" class="text-decoration-none nav-link">Search</RouterLink>
           </div>
           <RouterLink to="/blog" class="text-decoration-none nav-link">Blog</RouterLink>
         </nav>
